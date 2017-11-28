@@ -1,6 +1,8 @@
 from in_toto.util import import_rsa_key_from_file
 from in_toto.models.layout import Layout
 from in_toto.models.metadata import Metablock
+from in_toto import log
+import in_toto.settings
 
 def main():
   # Load Alice's private key to later sign the layout
@@ -75,6 +77,11 @@ def main():
   # Sign and dump layout to "root.layout"
   metadata.sign(key_alice)
   metadata.dump("root.layout")
+
+  if in_toto.settings.VERBOSE:
+    log.info("--Begin printing layout metadata--")
+    log.info(Layout.display(layout))
+    log.info("--End printing layout metadata--")
 
 if __name__ == '__main__':
   main()
